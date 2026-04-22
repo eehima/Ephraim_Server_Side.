@@ -3,6 +3,7 @@ const express = require('express');
 //create app
 const app = express();
 
+// body parser
 app.use(express.json());
 
 const studentInfo = [
