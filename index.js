@@ -3,7 +3,7 @@ const port = 7070;
 
 const app = express();
 
-
+app.use(express.json());
 const users = [
     {"id": 1, "name": "Alice", "age": 30},
     {"id": 2, "name": "Bob", "age": 25},
@@ -29,6 +29,22 @@ app.get(`/users/:id`, (req, res) => {
 app.get('/', (req, res) => {
     res.send('Server is up and running.');
 });
+
+app.post('/new-users', (req, res) => {
+    const {name, email} = req.body;
+
+    if (!name || !email)  {
+        return res.status(400).json({error: "Name and email are required"});
+    };
+    const newUser = {
+        id: users.length + 1,
+        name: name,
+        email: email
+    };
+    
+    users.push(newUser);
+    res.status(201).json(newUser);
+    });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`); 
